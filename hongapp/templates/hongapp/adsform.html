@@ -1,0 +1,88 @@
+
+{% extends "base.html" %}
+
+{% block static %}
+<link href="css/adsform.css" rel="stylesheet">
+<style>
+  #container h2 {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  #container h2:after {
+    content: "";
+    display: block;
+    margin: 8px auto 15px auto;
+    width: 30px;
+    height: 3px;
+    background: #8a7eb3;
+  }
+
+  .guide {
+    margin-bottom: 35px;
+    text-align: center;
+  }
+
+  form .fwrite {
+    width: 472px;
+    margin: 0 auto;
+  }
+
+  .fwrite input {
+    display: block;
+    margin: 10px 0;
+    width: 450px;
+    padding: 10px;
+    border: 1px solid #999;
+  }
+
+  .fwrite textarea {
+    width: 450px;
+    padding: 10px 10px 200px;
+    resize: none;
+    background: #f7f7f7;
+  }
+
+  .fwrite p {
+    text-align: center;
+  }
+
+  .submit {
+    display: block;
+    width: 100px;
+    padding: 10px 15px;
+    margin: 30px auto 0 auto;
+    border: 0;
+    background: #8a7eb3;
+    color: #fff;
+    font-size: 14px;
+  }
+</style>
+
+{% endblock %}
+
+
+
+{% block contents %}
+
+    <div id="container">
+      <br>
+      <h2>CONTACT US</h2>
+      <div class="guide">
+        <p>광고 집행과 관련한 문의사항을 양식에 맞게 작성해주세요.</p>
+        <p>신속하게 답변드리겠습니다.</p>
+      </div>
+      <!--.guide-->
+      <form method="post" action="">
+        <div class="fwrite">
+          <input type="text" name="name" placeholder="이름(*필수)">
+          <input type="text" name="tell" placeholder="연락처(*필수)">
+          <input type="text" name="email" placeholder="이메일(*필수)">
+          <textarea placeholder="* 내용을 입력해주세요"></textarea>
+          <p>*연락처는 문의내용 이외에 어떠한 다른 목적으로도 사용되지 않습니다.</p>
+        </div>
+        <input type="submit" value="보내기" class="submit">
+      </form>
+    </div>
+    <!--container-->
+    {% endblock %}

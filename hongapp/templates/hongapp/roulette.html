@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>네이버 룰렛</title>
+    <style>
+      /* 룰렛 표시 박스 스타일 */
+      #roulette {
+        width: 500px;
+        height: 500px;
+        margin: 0 auto;
+        border-radius: 50%;
+        position: relative;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      /* 룰렛 슬롯 스타일 */
+      .slot {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        background-color: #fff;
+        transform-origin: center center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        color: #333;
+        text-transform: uppercase;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      }
+      
+      /* 룰렛 버튼 스타일 */
+      button {
+        display: block;
+        margin: 30px auto;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #fff;
+        background-color: #f00;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="roulette"></div>
+    <div>
+      <label for="input">룰렛에 추가할 항목 입력:</label>
+      <input type="text" id="input" />
+      <button onclick="addItem()">추가</button>
+    </div>
+    <button onclick="spin()">룰렛 돌리기</button>
+   
+   <script>
+      // 슬롯 정보 배열 (슬롯 개수, 슬롯 내용, 슬롯 색상)
+      let slots = [
+        [1, "슬롯 1", "#f00"],
+        [2, "슬롯 2", "#0f0"],
+        [3, "슬롯 3", "#00f"],
+        [4, "슬롯 4", "#ff0"],
+        [5, "슬롯 5", "#f0f"],
+        [6, "슬롯 6", "#0ff"],
+      ];
+
+      // 룰렛 엘리먼트와 슬롯 엘리먼트 배열 생성
+      const roulette = document.getElementById("roulette");
+      const slotElements = [];
+
+     // 슬롯 생성 및 룰렛에 추가
+    function createSlots() {
+    roulette.innerHTML = "";
+    slotElements.length = 0; // 배열 초기화
+    let degree = 0;
+    const slotAngle = 360 / slots.length;
+
+    for (let i = 0; i < slots.length; i++) {
+    const slot = document.createElement("div");
+    slot.className = "slot";
+    slot.style.backgroundColor = slots[i][2];
+    slot.style.transform = `rotate(${degree}deg)`;
+
+    const slotContent = document.createElement("div");
+    slotContent.innerText = slots[i][1];
+    slot.appendChild(slotContent);
+
+    roulette.appendChild(slot);
+    slotElements.push(slot);
+    degree += slotAngle;
+  }
+}
+createSlots();
+
+
+  function addItem() {
+    const input = document.getElementById("input");
+    const newItem = input.value;
+    if (newItem) {
+      slots.push([slots.length + 1, newItem, "#999"]);
+      input.value = "";
+      createSlots();
+    }
+  }
+
+  function spin() {
+    const minSpins = 4; // 최소 회전 수
+    const maxSpins = 8; // 최대 회전 수
+    const spins = Math.floor(Math.random() * (maxSpins - minSpins + 1)) + minSpins; // 랜덤 회전 수
+    const duration = spins * 1000; // 회전 시간
+
+    let degree = 0;
+    const slotAngle = 360 / slots.length;
+    const targetSlot = Math.floor(Math.random() * slots.length); // 랜덤 타겟 슬롯
+
+    const targetDegree =
+      360 * 5 + // 기본 5바퀴 회전
+      (360 - (slotAngle * targetSlot + slotAngle / 2)) + // 타겟 슬롯 중앙으로 맞춤
+      (360 - (degree % 360)); // 현재 각도에 따른 보정
+
+    // 룰렛 회전 애니메이션
+    roulette.style.transition = `transform ${duration}ms ease-out`;
+    roulette.style.transform = `rotate(${targetDegree}deg)`;
+
+    // 애니메이션 완료 후 결과 출력
+    setTimeout(() => {
+      alert(` ${slots[targetSlot][1]}`);
+    }, duration);
+  }
+  roulette.addEventListener("transitionend", () => {
+  // 슬롯 선택 결과 출력
+  alert(`축하합니다! "${slots[targetSlot][1]}"가 선택되었습니다.`);
+
+  // 룰렛 초기 상태로 복귀
+  roulette.style.transition = "none";
+  roulette.style.transform = "rotate(0deg)";
+});
+
+  // ...
+</script>

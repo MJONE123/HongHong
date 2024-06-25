@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block static %}
+
+<link href="/static/css/lostidpw.css" rel="stylesheet">
+
+{% endblock %}
+{% block contents %}
+
+<form class="form1">
+	<h2>아이디 찾기</h2>
+	<label for="name">이름</label>
+	<input type="text" id="name" name="name" placeholder="이름을 입력하세요." required>
+	<br>
+  <label for="email">이메일</label>
+	<input type="text" id="email" name="email" placeholder="이메일을 입력하세요." required>
+  <br>
+  <button>확인</button>
+</form>
+
+
+<form class="form2">	
+  <h2>비밀번호 찾기</h2>
+  <label for="name">이름</label>
+	<input type="text" id="name" name="name" placeholder="이름을 입력하세요." required>
+  <label for="id">아이디</label>
+	<input type="text" id="id" name="id" placeholder="아이디을 입력하세요." required>
+  <label for="email">이메일</label>
+	<input type="text" id="email" name="email" placeholder="이메일을 입력하세요." required>
+  <button>확인</button>
+</form>
+
+{% endblock %}

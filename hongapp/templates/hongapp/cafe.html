@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block static %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstr
+ap/3.4.1/css/bootstrap.min.css">
+
+<style>
+    .container {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    } 
+
+    .map {
+        width: 50%;
+    }
+
+    .text {
+        width: 50%;
+    }
+
+    a {
+        font-size: 0.9em;
+        text-decoration: none;
+        color: blue;
+    }
+</style>
+{% endblock %}
+
+{% block contents %}
+<div class="container">
+    <div class="map">
+        <div id="map" style="width:470px; height:440px;"></div>
+        <script src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=da146a2a6ff6a54903c1d2a7caecd1c7"></script>
+        <script>
+            var container = document.getElementById('map');
+            var options = {
+                center: new kakao.maps.LatLng(36.620484, 127.287338),
+                level: 4
+            };
+
+            var map = new kakao.maps.Map(container, options);
+
+            var markerPosition = new kakao.maps.LatLng(36.620484, 127.287338);
+
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+
+            marker.setMap(map);
+
+            $.ajax({
+                url: '/map_data/',
+                data: {
+                    'lat': 37.4980239, 'lng': 127.027572
+                },
+                success: function (res) {
+                    for (var i = 0; i < res.length; i++) {
+                        var marker = new kakao.maps.Marker({
+                            map: map, // 마커를 표시할 지도
+                            position: new kakao.maps.LatLng(res[i].lat, res[i].lng),
+                            title: res[i].title,
+                        });
+                    }
+                }
+            });
+
+        </script>
+    </div>
+    <div class="text">
+        <table border="1" class='table table-striped'>
+            <tr>
+                <td>순번</td>
+                <td>이름</td>
+
+            </tr>
+            {% for a in hong %}
+            <tr>
+                <td>{{ a.id }}</td>
+                <td>{{ a.name }}</td>
+
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- <p>위도: {{ x }}</p>
+            <p>경도: {{ y }}</p> -->
+
+        <div style='text-align:center;'>
+            <ul class='pagination'>
+                {% if page > 10 %}
+                <li>
+                    <a href="/hong/cafe/?page={{page|add:'-10'}}">이전</a>
+                </li>
+                {% endif %}
+                {%for p in pages%}
+                <li>
+                    {% if p == page %}
+                    <span style="color: red;">{{ p }}</span>
+                    {% else %}
+                    <a href="/hong/cafe/?page={{ p }}">
+                        {{ p }}
+                    </a>
+                    {% endif %}
+                </li>
+                {%endfor%}
+                <li>
+                    <a href="/hong/cafe/?page={{page|add:'10'}}">다음</a>
+                </li>
+                <!-- (page+10)-(page%10)+1 -->
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

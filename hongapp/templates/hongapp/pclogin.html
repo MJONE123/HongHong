@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block static %}
+
+<link href="/static/css/pclogin.css" rel="stylesheet">
+
+{% endblock %}
+{% block contents %}
+<div id="container">
+  <div class="loginBox">
+    <br><br><br><br><br><br>
+    <div class="loginForm">
+      <input type="text" placeholder="아이디를 입력하세요." class="id">
+      <input type="submit" class="delete d1" value="지우기">
+      <input type="password" placeholder="비밀번호를 입력하세요." class="pw">
+      <input type="submit" class="delete d2" value="지우기">
+      <input type="submit" class="login" value="로그인">
+      <label class="loginCheck">
+        <input type="checkbox">
+        <span class="icon"></span>
+        <span class="text">자동 로그인</span>
+      </label>
+    </div>
+  </div>
+</div>
+{% endblock %}

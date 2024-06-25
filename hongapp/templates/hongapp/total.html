@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block static %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style>
+.ta {
+    position: relative;
+    width: 52%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    transform: translatex(46%) translateY(-4%);
+    word-break:break-all;
+    display:table;
+    table-layout:fixed;
+}
+</style>
+{% endblock %}
+
+{% block contents %}
+<div>
+    <br><br><br><br><br>
+    <div class="text">
+        <table border="1" class='ta table-striped';">
+            <tr>
+                <td class='id' style="width: 8%;">순번</td>
+                <td class="name" style="width: 30%;">이름</td>
+                <td class="address">&nbsp&nbsp&nbsp주소</td>
+            </tr>
+            {% for a in hong %}
+            <tr>
+                <td>{{ a.id }}</td>
+                <td>{{ a.name }}</td>
+                <td>&nbsp&nbsp&nbsp{{ a.address }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div style='text-align:center;'>
+            <ul class='pagination'>
+                {% if page > 10 %}
+                <li>
+                    <a href="/hong/total/?page={{page|add:'-10'}}">이전</a>
+                </li>
+                {% endif %}
+                {%for p in pages%}
+                <li>
+                    {% if p == page %}
+                    <span style="color: red;">{{ p }}</span>
+                    {% else %}
+                    <a href="/hong/total/?page={{ p }}">
+                        {{ p }}
+                    </a>
+                    {% endif %}
+                </li>
+                {%endfor%}
+                <li>
+                    <a href="/hong/total/?page={{page|add:'10'}}">다음</a>
+                </li>
+                <!-- (page+10)-(page%10)+1 -->
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

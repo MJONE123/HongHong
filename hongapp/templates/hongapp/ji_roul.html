@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel = "stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+
+        * {
+            font-family: Pretendard;
+        }
+
+        body {
+            background: #f7f8fc;
+        }
+
+        canvas {
+            transition: 2s;
+        }
+
+        button {
+            background: #febf00;
+            margin-top: 1rem;
+            padding: .8rem 1.8rem;
+            border: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: .2s;
+            cursor: pointer;
+        }
+        
+        button:active {
+            background: #444;
+            color: #f9f9f9;
+        }
+        
+        div {
+            width: 380px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        div::before {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 50px;
+            border-radius: 5px;
+            background: #000;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 22;
+        }
+    </style>
+</head>
+    <body>
+        <div>
+            <canvas width="380" height='380'></canvas>
+            <button onclick="rotate()">GO!</button>
+        </div>
+        <script>
+            const $c = document.querySelector("canvas");
+            const ctx = $c.getContext(`2d`);
+            
+            
+            const product = [
+                "학식", "레빗홀버거", "개미집", "서브웨이", "초밥", "빠오즈푸", "돈까스", "시홍쓰", "반미 베이글", "굴림만두", "이삭토스트",
+                "행복한식탁", "라멘", "알고", "콩불", "버거킹", "KFC", "감자탕", "마라탕", "즉떡", "미식반점", "타코", "낙곱새", "맥도날드", "피자", "샤브샤브", "어쩌구한식", "포케", "동궁찜닭", "싸다김밥",
+                "찜닭", "철순이네김치찌개", "비엣포", "본래순대",
+            ];
+            
+            const colors = ["#dc0936", "#e6471d", "#f7a416", "#efe61f", "#60b236", "#209b6c", "#169ed8", "#3f297e", "#87207b", "#be107f", "#e7167b"];
+            
+            const newMake = () => {
+                const [cw, ch] = [$c.width / 2, $c.height / 2];
+                const arc = Math.PI / (product.length / 2);
+                
+                for (let i = 0; i < product.length; i++) {
+                    ctx.beginPath();
+                ctx.fillStyle = colors[i % (colors.length - 1)];
+                ctx.moveTo(cw, ch);
+                ctx.arc(cw, ch, cw, arc * (i - 1), arc * i);
+                ctx.fill();
+                ctx.closePath();
+            }
+            
+            ctx.fillStyle = "#fff";
+            ctx.font = "18px Pretendard";
+            ctx.textAlign = "center";
+            
+            for (let i = 0; i < product.length; i++) {
+                const angle = (arc * i) + (arc / 2);
+                
+                ctx.save();
+                
+                ctx.translate(
+                    cw + Math.cos(angle) * (cw - 50),
+                    ch + Math.sin(angle) * (ch - 50),
+                    );
+                    
+                    ctx.rotate(angle + Math.PI / 2);
+                    
+                    product[i].split(" ").forEach((text, j) => {
+                        ctx.fillText(text, 0, 30 * j);
+                    });
+
+                ctx.restore();
+            }
+        }
+        
+        const rotate = () => {
+            $c.style.transform = `initial`;
+            $c.style.transition = `initial`;
+            
+            setTimeout(() => {
+                
+                const ran = Math.floor(Math.random() * product.length);
+                
+                const arc = 360 / product.length;
+                const rotate = (ran * arc) + 3600 + (arc * 3) - (arc / 4);
+                
+                $c.style.transform = `rotate(-${rotate}deg)`;
+                $c.style.transition = `2s`;
+                
+                setTimeout(() => alert(`오점뭐?? ${product[ran]} !!!`), 2000);
+            }, 1);
+        };
+        
+        newMake();
+        </script>
+    </body>
+
+    </html>

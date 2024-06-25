@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>HONG-HONG</title>
+  <link href="/static/css/reset.css" rel="stylesheet">
+  <link href="/static/css/main.css" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v5.0.3/css/all.css" rel="stylesheet">
+
+<style>
+  #lnb {
+    position: absolute;
+    z-index: 100;
+  }
+
+  #lnb:hover ul {
+    display:  block;
+  }
+  
+  #lnb li ul {
+    display: none;
+  }
+
+  #lnb ul a:hover {
+    color: #fff;
+    background-color: #333;
+  }
+
+  #lnb > ul > li:not(:hover) > ul {
+  display: none;
+}
+
+</style>
+
+  {% block static %} <!--css.자바-->
+  {% endblock %}
+
+</head>
+
+<body>
+  <div id="wrap">
+    <header id="header">
+      <div id="headerIn">
+        <h1 class="logo">
+          <a href="/hong"><img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAGMLMSg-yIZLIT-DftuyCKZdDhoBTrgnHHw&usqp=CAU"
+              alt="홍홍">
+          </a>
+        </h1>
+        <div>
+          <a href="/hong/pcjoin">회원가입</a>
+          <a>|</a>
+          <a href="/hong/pclogin">로그인</a>
+          <a>|</a>
+          <a href="/hong/lostidpw">ID/PW찾기</a>
+        </div>
+        <div class="search">
+          <input type="text" placeholder='  검 색' class="src">
+          <label>검색하기<img src='/static/img/se.png'></label>
+          
+        </div>
+        <nav id="lnb">
+          <ul class="cf">
+            <li><a href="/hong/map_big">전 체</a></li>
+            <li><a href="#">게시판</a>
+              <ul><a href="#">리뷰</a></ul>
+              <ul><a href="#">배달팟</a></ul>
+            </li>
+            <li><a href="#">홍대 인근</a>
+              <ul><a href="/hong/map_front">정문</a></ul>
+              <ul><a href="/hong/map_back">후문</a></ul>
+              <ul><a href="/hong/map_gugiback">구기</a></ul>
+            </li>
+            <li><a href="/hong/map_jochi">조치원역</a></li>
+            <li><a href="/hong/total">목 록</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    {% block contents %} <!--본문-->
+    {% endblock %}
+
+    <footer id="footer">
+      <p class="copy">COPYRIGHT (C) <span>HONG.</span> ALL RIGHTS RESERVED</p>
+      <ul class="fmenu cf">
+        <li><a href="/hong/userag">이용약관</a><span>|</span></li>
+        <li><a href="/hong/privacy"><u>개인정보 처리방침</u></a><span>|</span></li>
+        <li><a href="/hong/adsform">광고문의</a></li>
+      </ul>
+    </footer>
+  </div>
+</body>
+
+</html>
